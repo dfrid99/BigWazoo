@@ -2,10 +2,8 @@ import cv2
 import numpy as np
 
 
-
- def preprocess(action_frame):
-
-    blur = cv2.GaussianBlur(action_frame, (3,3), 0)
+def preprocess(action_frame):
+    blur = cv2.GaussianBlur(action_frame, (3, 3), 0)
     hsv = cv2.cvtColor(blur, cv2.COLOR_RGB2HSV)
 
     lower_color = np.array([108, 23, 82])
@@ -20,14 +18,11 @@ import numpy as np
 
     ret, thresh = cv2.threshold(hsv_d, 127, 255, 0)
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    if( len(contours) != 0):
+    if (len(contours) != 0):
         c = max(contours, key=cv2.contourArea)
-        if(cv2.contourArea(c) > 100):
+        if (cv2.contourArea(c) > 100):
             x, y, w, h = cv2.boundingRect(c)
-            #print([x,y,w,h])
-            return hsv_d[y:y+h,x:x+w]
-    #hsv_d = reNoise(hsv_d)
+            # print([x,y,w,h])
+            return hsv_d[y:y + h, x:x + w]
+    # hsv_d = reNoise(hsv_d)
     return hsv_d
-
-
-

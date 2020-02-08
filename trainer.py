@@ -12,7 +12,8 @@ class Trainer:
 
     def addImages(self, path, label):
         folder, dirs, files = next(os.walk(path))
-        files.pop(0)
+        if(files[0] == '.DS_Store'):
+            files.pop(0)
         file_count = len(files)
         currLenTrain = len(self.train_images)
         currLenTest = len(self.test_images)

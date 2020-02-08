@@ -15,12 +15,25 @@ videoFrame = cv2.VideoCapture(0)
 
 
 #os.mkdir(path)
-model = models.load_model('machLearnModv2.h5')
-symbols = ['Woo', 'Back']
+model = models.load_model('machLearnModv3.h5')
+symbols = ['Woo', 'Back', 'Baby']
 
 def prepare(imgArr):
     retArr = imgArr.reshape(-1,30,30,1)
     return retArr
+
+def checkPath(path):
+    if(not os.path.isdir(path)):
+        os.mkdir(path)
+        return 0
+    else:
+        folder, dirs, files = next(os.walk(path))
+        file_count = len(files)
+        if(files[0] == '.DS_Store'):
+            return file_count - 1
+        return file_count
+
+
 
 
 def showCamera():
@@ -73,8 +86,8 @@ def showCamera():
 
         if (keyPressed == 113):
             takingImg = True
-            path = os.getcwd() + "/test_2"
-            pictureCount = 1500
+            path = os.getcwd() + "/test_3"
+            pictureCount = checkPath(path)
         if (takingImg and pictureCount < 3000):
             cv2.imwrite(os.path.join(path, 'img_' + str(pictureCount) + '.jpg'), hand)
             print(pictureCount)
